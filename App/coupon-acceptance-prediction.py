@@ -1,71 +1,57 @@
+import streamlit as st
 import pickle
 import os
+import numpy as np
 
-# Define the relative path from App folder to the model file
-model_path = os.path.join('..', 'Models', 'random_forest_model.pkl')
+# -----------------------------
+# Define path to the model file
+# -----------------------------
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # Directory where this script is located
+model_path = os.path.join(BASE_DIR, '..', 'Models', 'random_forest_model.pkl')  # Path to the model file
 
-# Load the model
+# Load the pre-trained Random Forest model
 with open(model_path, 'rb') as f:
     model = pickle.load(f)
 
+# -----------------------------
+# Streamlit app starts here
+# -----------------------------
 
 st.title("Coupon Acceptance Prediction")
 
-# --- User Inputs ---
-# Adapt these options based on your dataset categories
-weather_options = ['Sunny', 'Rainy', 'Snowy', 'Cloudy', 'Other']
-passenger_options = ['Alone', 'Friends', 'Kids', 'Other']
-age_options = ['21-30', '31-40', '41-50', '51+']
+# Example input features (adapt to your real feature names and expected input types)
+# For example, if your model uses features like 'weather', 'passenger', 'time', 'age', 'temperature'
+# you should create appropriate input widgets here to collect user inputs.
 
-# Dropdown for weather selection
-weather = st.selectbox('Weather', weather_options)
+weather = st.selectbox("Weather condition", ['Sunny', 'Rainy', 'Snowy', 'Cloudy', 'Windy'])
+passenger = st.selectbox("Passenger type", ['Alone', 'Friend(s)', 'Partner', 'Kids'])
+time = st.slider("Time (hour of the day)", 0, 23, 12)
+age = st.slider("Age", 18, 70, 30)
+temperature = st.number_input("Temperature (°F)", value=70)
 
-# Slider to select the hour of the day (0-23)
-time = st.slider('Hour of the day', 0, 23, 12)
+# You will need to preprocess these inputs exactly as you did for training.
+# For example, encoding categorical variables, scaling, etc.
 
-# Dropdown for passenger type
-passenger = st.selectbox('Passenger', passenger_options)
+# Here is a placeholder function to preprocess inputs - adapt this to your real preprocessing!
+def preprocess_input(weather, passenger, time, age, temperature):
+    # Example: simple manual encoding (just for demonstration)
+    weather_dict = {'Sunny': 0, 'Rainy': 1, 'Snowy': 2, 'Cloudy': 3, 'Windy': 4}
+    passenger_dict = {'Alone': 0, 'Friend(s)': 1, 'Partner': 2, 'Kids': 3}
 
-# Dropdown for age group
-age = st.selectbox('Age group', age_options)
+    weather_encoded = weather_dict.get(weather, 0)
+    passenger_encoded = passenger_dict.get(passenger, 0)
 
-# Slider for temperature input
-temperature = st.slider('Temperature (°C)', -10, 40, 20)
+    # Create feature vector as numpy array (shape = [1, n_features])
+    features = np.array([[weather_encoded, passenger_encoded, time, age, temperature]])
+    return features
 
-# --- Encoding functions ---
-def encode_weather(w):
-    # Map weather categories to numerical values
-    mapping = {'Sunny': 0, 'Rainy': 1, 'Snowy': 2, 'Cloudy': 3, 'Other': 4}
-    return mapping.get(w, 4)
-
-def encode_passenger(p):
-    # Map passenger categories to numerical values
-    mapping = {'Alone': 0, 'Friends': 1, 'Kids': 2, 'Other': 3}
-    return mapping.get(p, 3)
-
-def encode_age(a):
-    # Map age groups to numerical values
-    mapping = {'21-30': 0, '31-40': 1, '41-50': 2, '51+': 3}
-    return mapping.get(a, 3)
-
-# Encode categorical inputs
-weather_encoded = encode_weather(weather)
-passenger_encoded = encode_passenger(passenger)
-age_encoded = encode_age(age)
-
-# Prepare feature vector in the expected order
-X = np.array([[weather_encoded, time, passenger_encoded, age_encoded, temperature]])
-
-# --- Prediction ---
+# When user clicks this button, perform prediction
 if st.button("Predict Coupon Acceptance"):
-    # Predict class label (0 = reject, 1 = accept)
-    prediction = model.predict(X)[0]
+    features = preprocess_input(weather, passenger, time, age, temperature)
+    prediction = model.predict(features)[0]
+    prediction_proba = model.predict_proba(features)[0,1]  # Probability of acceptance (class 1)
 
-    # Predict probability of acceptance
-    proba = model.predict_proba(X)[0][1]
-
-    # Display the result with probability
     if prediction == 1:
-        st.success(f"Coupon accepted with probability of {proba:.2%}")
+        st.success(f"Coupon is likely to be accepted! (Confidence: {prediction_proba:.2f})")
     else:
-        st.error(f"Coupon rejected with probability of {1 - proba:.2%}")
+        st.warning(f"Coupon is unlikely to be accepted. (Confidence: {1 - prediction_proba:.2f})")
