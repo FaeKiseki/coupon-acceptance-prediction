@@ -18,7 +18,7 @@ based on contextual information such as weather, time, passenger, age, and tempe
 """)
 
 # --- User Input ---
-weather_options = ['Sunny', 'Rainy', 'Snowy', 'Cloudy']
+weather_options = ['Sunny', 'Rainy', 'Snowy']
 time_options = ['7AM', '10AM', '2PM', '6PM', '10PM']
 passenger_options = ['Alone', 'Friends', 'Kids', 'Partner']
 age_options = ['below21', '21', '26', '31', '36', '41', '46', '50plus']
