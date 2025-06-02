@@ -1,9 +1,12 @@
 import streamlit as st
 import joblib
 import numpy as np
+import os
 
-# Load the trained Random Forest model
-model_path = '../Models/random_forest_model.pkl'
+# Model path relative to the app folder
+model_path = os.path.join(os.path.dirname(__file__), '..', 'Models', 'random_forest_model.pkl')
+
+# Loading the model
 model = joblib.load(model_path)
 
 st.set_page_config(page_title="Coupon Acceptance Predictor", layout="centered")
