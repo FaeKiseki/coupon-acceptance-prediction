@@ -3,55 +3,52 @@ import joblib
 import numpy as np
 import os
 
-# --- Load the model ---
+# Model path relative to the app folder
 model_path = os.path.join(os.path.dirname(__file__), '..', 'Models', 'random_forest_model.pkl')
+
+# Loading the model
 model = joblib.load(model_path)
 
-# --- Streamlit UI configuration ---
 st.set_page_config(page_title="Coupon Acceptance Predictor", layout="centered")
-st.title("🎯 Coupon Acceptance Prediction App")
+st.title("🌟 Coupon Acceptance Prediction App")
 
 st.markdown("""
-This app predicts whether a user will accept a coupon based on contextual inputs like weather, 
-time of day, age group, passenger type, and temperature (°F).
+This app uses a machine learning model to predict whether a user will accept a coupon 
+based on contextual information such as weather, time, passenger, age, and temperature.
 """)
 
-# --- Input Widgets ---
-temperature = st.slider('Temperature (°F)', min_value=30, max_value=110, value=70)
+# --- User Input ---
+weather_options = ['Sunny', 'Rainy', 'Snowy', 'Cloudy']
+time_options = ['7AM', '10AM', '2PM', '6PM', '10PM']
+passenger_options = ['Alone', 'Friends', 'Kids', 'Partner']
+age_options = ['below21', '21', '26', '31', '36', '41', '46', '50plus']
+temperature_options = [30, 55, 80]
 
-weather = st.selectbox("Weather condition", ['Sunny', 'Snowy', 'Rainy'])
+weather = st.selectbox('Weather condition', weather_options)
+time = st.selectbox('Time of day', time_options)
+passenger = st.selectbox('Passenger type', passenger_options)
+age = st.selectbox('Age group', age_options)
+temperature = st.selectbox('Temperature (°F)', temperature_options)
 
-age_group = st.selectbox("Age group", [
-    'below21', '21-25', '26-30', '31-35', '36-40', '41-45', '46-50', '50plus'
-])
+# --- Feature Encoding ---
+weather_map = {'Sunny': 0, 'Rainy': 1, 'Snowy': 2, 'Cloudy': 3}
+time_map = {'7AM': 0, '10AM': 1, '2PM': 2, '6PM': 3, '10PM': 4}
+passenger_map = {'Alone': 0, 'Friends': 1, 'Kids': 2, 'Partner': 3}
+age_map = {'below21': 0, '21': 1, '26': 2, '31': 3, '36': 4, '41': 5, '46': 6, '50plus': 7}
 
-time_of_day = st.selectbox("Time of Day", ['AM', 'PM'])
+weather_encoded = weather_map[weather]
+time_encoded = time_map[time]
+passenger_encoded = passenger_map[passenger]
+age_encoded = age_map[age]
 
-passenger_type = st.selectbox("Passenger Type", ['Alone', 'Friend(s)', 'Kid(s)', 'Partner'])
+# Prepare the input array
+X_input = np.array([[weather_encoded, time_encoded, passenger_encoded, age_encoded, temperature]])
 
-# --- Feature Encoding (must match training preprocessing) ---
-weather_map = {'Sunny': 0, 'Snowy': 1, 'Rainy': 2}
-age_map = {
-    'below21': 0, '21-25': 1, '26-30': 2, '31-35': 3,
-    '36-40': 4, '41-45': 5, '46-50': 6, '50plus': 7
-}
-time_map = {'AM': 0, 'PM': 1}
-passenger_map = {'Alone': 0, 'Friend(s)': 1, 'Kid(s)': 2, 'Partner': 3}
-
-# --- Convert inputs to numeric values ---
-input_features = np.array([[
-    temperature,
-    weather_map[weather],
-    age_map[age_group],
-    time_map[time_of_day],
-    passenger_map[passenger_type]
-]])
-
-# --- Make prediction ---
+# --- Prediction ---
 if st.button("Predict Coupon Acceptance"):
-    prediction = model.predict(input_features)[0]
-    proba = model.predict_proba(input_features)[0][1]
+    prediction = model.predict(X_input)[0]
+    proba = model.predict_proba(X_input)[0][1]
 
     st.subheader("Prediction Result")
-    st.markdown(f"**Coupon will be {'✅ ACCEPTED' if prediction == 1 else '❌ DECLINED'}**")
-    st.markdown(f"**Probability of acceptance: {proba:.2%}**")
+    st.markdown(f"**Coupon will be {'ACCEPTED' if prediction == 1 else 'DECLINED'}**")
+    st.markdown(f"Probability of acceptance: **{proba:.2%}**")
