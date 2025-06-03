@@ -3,11 +3,13 @@ import joblib
 import pandas as pd
 import os
 
-# Model path relative to the app folder
-model_path = os.path.join(os.path.dirname(__file__), '..', 'Models', 'random_forest_model.pkl')
+# --- Load model and feature order ---
+base_path = os.path.dirname(__file__)
+model_path = os.path.join(base_path, '..', 'Models', 'random_forest_model.pkl')
+features_path = os.path.join(base_path, '..', 'Models', 'feature_order.pkl')
 
-# Loading the model
 model = joblib.load(model_path)
+feature_order = joblib.load(features_path)  # <- Liste des colonnes
 
 st.set_page_config(page_title="Coupon Acceptance Predictor", layout="centered")
 st.title("🌟 Coupon Acceptance Prediction App")
@@ -91,6 +93,9 @@ for key in extra_keys:
 
 # Convert to DataFrame
 input_df = pd.DataFrame([input_dict])
+
+# --- Reorder columns to match training set ---
+input_df = input_df.reindex(columns=feature_order, fill_value=0)
 
 # --- Prediction ---
 if st.button("Predict Coupon Acceptance"):
