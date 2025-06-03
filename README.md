@@ -1,10 +1,4 @@
-Sure, Rose! Here’s a professional README template in English including your dashboard and portfolio links:
-
----
-
-# Coupon Acceptance Prediction
-
-## 🚀 Coupon Acceptance Prediction Project
+# 🚀 Coupon Acceptance Prediction Project
 
 This project aims to predict customers' acceptance of coupons based on various behavioral and contextual variables such as weather, time, age group, passenger type, temperature, and more.
 
@@ -47,13 +41,3 @@ Check out my other projects and professional work on my portfolio:
 * Jupyter Notebook
 * Tableau Public for the dashboard
 * Git & GitHub for version control
-
----
-
-## 📩 Contact
-
-Feel free to reach out for questions or collaboration!
-
----
-
-If you want, I can also prepare a ready-to-use `README.md` file for your repo. Would you like me to?
