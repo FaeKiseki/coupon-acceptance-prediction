@@ -32,14 +32,14 @@ A tuned Random Forest model was developed to achieve strong predictive performan
 ## 📊 Interactive Dashboard
 
 Explore the data and visualize key insights through the interactive dashboard here:
-[👉 View the Dashboard]([https://public.tableau.com/views/Couponacceptanceanalysis/Couponacceptanceanalysis?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link](https://public.tableau.com/views/Couponacceptanceanalysis/Couponacceptanceanalysis?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link))
+[👉 View the Dashboard][https://public.tableau.com/views/Couponacceptanceanalysis/Couponacceptanceanalysis?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link](https://public.tableau.com/views/Couponacceptanceanalysis/Couponacceptanceanalysis?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
 
 ---
 
 ## 💼 My Portfolio
 
 Check out my other projects and professional work on my portfolio:
-[👉 Visit My Portfolio]([https://esmeralda-nguetse-portfolio.netlify.app/](https://esmeralda-nguetse-portfolio.netlify.app/))
+[👉 Visit My Portfolio][https://esmeralda-nguetse-portfolio.netlify.app/](https://esmeralda-nguetse-portfolio.netlify.app/)
 
 ---
 
