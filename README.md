@@ -1,5 +1,3 @@
-# coupon-acceptance-prediction
-
 Sure, Rose! Here’s a professional README template in English including your dashboard and portfolio links:
 
 ---
@@ -32,14 +30,14 @@ A tuned Random Forest model was developed to achieve strong predictive performan
 ## 📊 Interactive Dashboard
 
 Explore the data and visualize key insights through the interactive dashboard here:
-[👉 View the Dashboard][https://public.tableau.com/views/Couponacceptanceanalysis/Couponacceptanceanalysis?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link](https://public.tableau.com/views/Couponacceptanceanalysis/Couponacceptanceanalysis?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
+[👉 View the Dashboard](https://yourdashboardlink.com)
 
 ---
 
 ## 💼 My Portfolio
 
 Check out my other projects and professional work on my portfolio:
-[👉 Visit My Portfolio][https://esmeralda-nguetse-portfolio.netlify.app/](https://esmeralda-nguetse-portfolio.netlify.app/)
+[👉 Visit My Portfolio]([https://yourportfoliolink.com](https://esmeralda-nguetse-portfolio.netlify.app/))
 
 ---
 
@@ -49,3 +47,13 @@ Check out my other projects and professional work on my portfolio:
 * Jupyter Notebook
 * Tableau Public for the dashboard
 * Git & GitHub for version control
+
+---
+
+## 📩 Contact
+
+Feel free to reach out for questions or collaboration!
+
+---
+
+If you want, I can also prepare a ready-to-use `README.md` file for your repo. Would you like me to?
